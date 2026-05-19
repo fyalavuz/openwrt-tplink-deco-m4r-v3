@@ -1,0 +1,42 @@
+name: Bug report
+description: Report a build, flash, boot, or runtime issue
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What happened?
+    validations:
+      required: true
+
+  - type: input
+    id: hardware
+    attributes:
+      label: Hardware version and region
+      placeholder: "Example: Deco M4R v3 EU"
+    validations:
+      required: true
+
+  - type: input
+    id: openwrt
+    attributes:
+      label: OpenWrt branch or commit
+      placeholder: "Example: caeklol/openwrt openwrt-23.05"
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Serial log or command output
+      description: Redact MAC addresses, serial numbers, keys, and private data.
+      render: text
+
+  - type: textarea
+    id: verification
+    attributes:
+      label: Verification already tried
+      description: Mention backup, image size, cmp.b result, overlay status, LuCI status, or Wi-Fi status.
+      render: text

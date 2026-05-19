@@ -1,0 +1,6 @@
+*.md text eol=lf
+*.sh text eol=lf
+*.py text eol=lf
+*.patch text eol=lf
+Makefile text eol=lf
+

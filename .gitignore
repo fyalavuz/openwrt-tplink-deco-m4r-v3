@@ -1,0 +1,24 @@
+.DS_Store
+
+# Local build output
+/artifacts/
+/backups/
+/build/
+/dl/
+/openwrt/
+/openwrt-*/
+
+# Firmware images and raw flash dumps
+*.bin
+*.itb
+*.img
+*.trx
+*.ubi
+*.dump
+
+# Logs
+*.log
+
+# Python
+__pycache__/
+*.pyc

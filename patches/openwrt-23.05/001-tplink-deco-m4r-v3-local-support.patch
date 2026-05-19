@@ -1,0 +1,68 @@
+diff --git a/target/linux/ipq40xx/files/arch/arm/boot/dts/qcom-ipq4019-deco-m4r-v3.dts b/target/linux/ipq40xx/files/arch/arm/boot/dts/qcom-ipq4019-deco-m4r-v3.dts
+index 9a56a532e4..932b9b9eaa 100644
+--- a/target/linux/ipq40xx/files/arch/arm/boot/dts/qcom-ipq4019-deco-m4r-v3.dts
++++ b/target/linux/ipq40xx/files/arch/arm/boot/dts/qcom-ipq4019-deco-m4r-v3.dts
+@@ -22,7 +22,7 @@
+ 
+ / {
+         model = "TP-Link Deco M4R v3";
+-        compatible = "tp-link,deco-m4r-v3", "qcom,ipq4019";
++        compatible = "tplink,deco-m4r-v3", "qcom,ipq4019";
+ 
+ 		chosen {
+ 			bootargs-append = " root=/dev/mtdblock15 rootfstype=squashfs loglevel=8";
+@@ -288,7 +288,7 @@
+ 			};
+ 			partition15@d10000 {
+-				label = "1:rootfs";
++				label = "rootfs";
+ 				reg = <0x01450000 0x00bb0000>;
+ 				read-only;
+ 			};
+ 		};
+diff --git a/target/linux/ipq40xx/image/generic.mk b/target/linux/ipq40xx/image/generic.mk
+index 130a7c96ee..a186c1624d 100644
+--- a/target/linux/ipq40xx/image/generic.mk
++++ b/target/linux/ipq40xx/image/generic.mk
+@@ -1124,7 +1124,8 @@ define Device/tp-link_deco-m4r-v3
+ 	SOC := qcom-ipq4019
+ 	DEVICE_DTS := qcom-ipq4019-deco-m4r-v3
+ 	DEVICE_DTS_CONFIG := config@ap.dk04.1-c1
++	SUPPORTED_DEVICES += tplink,deco-m4r-v3
+-	#DEVICE_PACKAGES := ipq-wifi-tp-link_deco_m4r_v3
++	DEVICE_PACKAGES := ipq-wifi-tplink_deco-m4r-v3 luci
+ 	#BOARD_NAME := deco-m4r-v3
+ 	DEVICE_DTS_DELIMITER := @
+ 	TPLINK_BOARD_ID := DECO-M4R-V3
+diff --git a/target/linux/ipq40xx/base-files/etc/uci-defaults/99-deco-m4r-v3-wifi b/target/linux/ipq40xx/base-files/etc/uci-defaults/99-deco-m4r-v3-wifi
+new file mode 100755
+index 0000000000..c2f97ca9ee
+--- /dev/null
++++ b/target/linux/ipq40xx/base-files/etc/uci-defaults/99-deco-m4r-v3-wifi
+@@ -0,0 +1,26 @@
++#!/bin/sh
++
++. /lib/functions.sh
++
++[ "$(board_name)" = "tplink,deco-m4r-v3" ] || exit 0
++
++[ -s /etc/config/wireless ] || wifi config
++
++uci -q get wireless.radio0 >/dev/null || exit 1
++uci -q get wireless.radio1 >/dev/null || exit 1
++
++uci -q batch <<'EOF'
++set wireless.radio0.disabled='0'
++set wireless.radio0.country='TR'
++set wireless.default_radio0.ssid='DecoM4-2G'
++set wireless.default_radio0.encryption='psk2'
++set wireless.default_radio0.key='openwrt1234'
++set wireless.radio1.disabled='0'
++set wireless.radio1.country='TR'
++set wireless.default_radio1.ssid='DecoM4-5G'
++set wireless.default_radio1.encryption='psk2'
++set wireless.default_radio1.key='openwrt1234'
++commit wireless
++EOF
++
++exit 0
