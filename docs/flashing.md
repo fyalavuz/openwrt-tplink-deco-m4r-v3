@@ -2,6 +2,13 @@
 
 This guide writes OpenWrt to the stock slot1 kernel/rootfs area from U-Boot.
 
+> [!CAUTION]
+> Do not remove serial wiring or close the device after only a U-Boot `reset`.
+> A tested unit booted OpenWrt after `reset` but returned to stock TP-Link after
+> a full power-off/power-on. Keep serial attached until a cold boot has been
+> verified. The missing step is likely boot-selection persistence or writing the
+> active boot slot, and this is still being investigated.
+
 Read this page completely before running commands.
 
 ## Required Files
@@ -127,6 +134,10 @@ Boot:
 ```text
 reset
 ```
+
+This reset is not enough to prove persistence. After OpenWrt boots, power the
+device off completely, wait a few seconds, power it back on, and verify that it
+still boots OpenWrt before removing serial wiring.
 
 ## First Boot
 

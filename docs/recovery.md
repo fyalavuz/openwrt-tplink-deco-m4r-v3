@@ -137,3 +137,21 @@ If the device does not boot:
 4. Reflash the known-good split kernel/rootfs.
 
 Do not erase bootloader, ART, OPAQUE, or calibration partitions.
+
+## Returned To Stock After Power Cycle
+
+If OpenWrt booted after a U-Boot `reset` but the device returned to TP-Link
+stock firmware after a full power cycle, the OpenWrt image was probably written
+to a slot that the bootloader did not continue selecting on cold boot.
+
+Without serial attached, try the non-invasive paths first:
+
+1. Use the TP-Link/Deco web UI local firmware upgrade page, if available, and
+   try the generated `*-squashfs-factory.bin`.
+2. Use TP-Link's web-based recovery interface for Deco M4 if your firmware
+   exposes it.
+3. If stock firmware refuses third-party images, serial/U-Boot access is needed
+   again to inspect the boot environment and either persist the active slot or
+   write the image to the slot selected by cold boot.
+
+Do not keep repeating random flash writes without a current full flash backup.

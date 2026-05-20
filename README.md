@@ -3,6 +3,14 @@
 Unofficial OpenWrt build notes, patches, and recovery-oriented flashing guide
 for the TP-Link Deco M4R v3 / AC1200.
 
+> [!WARNING]
+> The current U-Boot slot1 flashing notes are **not yet proven persistent across
+> a full cold power cycle** on every unit. A tested device booted OpenWrt after
+> U-Boot `reset`, but later returned to stock TP-Link firmware after being fully
+> powered off and back on. Do not desolder or close the device until you have
+> verified a full unplug/replug cold boot into OpenWrt. Treat the flashing guide
+> as recovery/research notes until this boot-selection issue is resolved.
+
 This repository is meant to be practical: it contains the exact local patches,
 build scripts, pinout notes, backup steps, and U-Boot flashing commands used to
 bring a Deco M4R v3 EU unit up on OpenWrt 23.05.
@@ -34,6 +42,7 @@ bring a Deco M4R v3 EU unit up on OpenWrt 23.05.
 - LuCI web interface included in the generated image.
 - Default Wi-Fi enabled on first boot.
 - Serial/U-Boot recovery path.
+- Cold-boot persistence is under investigation.
 
 ## What This Repo Adds
 
