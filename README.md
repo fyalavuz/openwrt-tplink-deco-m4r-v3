@@ -7,7 +7,9 @@ for the TP-Link Deco M4R v3 / AC1200.
 > The current U-Boot slot1 flashing notes are **not yet proven persistent across
 > a full cold power cycle** on every unit. A tested device booted OpenWrt after
 > U-Boot `reset`, but later returned to stock TP-Link firmware after being fully
-> powered off and back on. Do not desolder or close the device until you have
+> powered off and back on. The likely cause is that warm `reset` can still boot
+> a FIT image left in RAM at `0x84000000`, which is not proof that the bootloader
+> loaded OpenWrt from flash. Do not desolder or close the device until you have
 > verified a full unplug/replug cold boot into OpenWrt. Treat the flashing guide
 > as recovery/research notes until this boot-selection issue is resolved.
 

@@ -16,3 +16,5 @@
   persistent across a full cold power cycle on every unit.
 - Documented the observed case where OpenWrt booted after U-Boot `reset` but
   stock TP-Link firmware returned after complete power-off/power-on.
+- Documented the likely false-positive warm boot failure mode: U-Boot can boot
+  the last TFTP image still present in RAM at `0x84000000`.

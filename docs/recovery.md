@@ -144,12 +144,18 @@ If OpenWrt booted after a U-Boot `reset` but the device returned to TP-Link
 stock firmware after a full power cycle, the OpenWrt image was probably written
 to a slot that the bootloader did not continue selecting on cold boot.
 
+Another possible failure mode is a false-positive warm boot: U-Boot may boot a
+FIT image that was still present in RAM at `0x84000000` from the previous TFTP
+transfer. A cold boot clears that RAM state and follows the stock boot path.
+
 Without serial attached, try the non-invasive paths first:
 
 1. Use the TP-Link/Deco web UI local firmware upgrade page, if available, and
    try the generated `*-squashfs-factory.bin`.
 2. Use TP-Link's web-based recovery interface for Deco M4 if your firmware
-   exposes it.
+   exposes it. TP-Link documents Deco M4 under the HTTP U-Boot recovery method:
+   hold reset while powering on, connect by Ethernet, and browse to
+   `http://192.168.0.1`.
 3. If stock firmware refuses third-party images, serial/U-Boot access is needed
    again to inspect the boot environment and either persist the active slot or
    write the image to the slot selected by cold boot.

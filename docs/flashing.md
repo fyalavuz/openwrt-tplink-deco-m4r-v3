@@ -5,9 +5,11 @@ This guide writes OpenWrt to the stock slot1 kernel/rootfs area from U-Boot.
 > [!CAUTION]
 > Do not remove serial wiring or close the device after only a U-Boot `reset`.
 > A tested unit booted OpenWrt after `reset` but returned to stock TP-Link after
-> a full power-off/power-on. Keep serial attached until a cold boot has been
-> verified. The missing step is likely boot-selection persistence or writing the
-> active boot slot, and this is still being investigated.
+> a full power-off/power-on. In that test, U-Boot printed `Booting kernel from
+> FIT Image at 84000000`, which may be a warm-reset RAM artifact from the last
+> TFTP transfer rather than a flash load. Keep serial attached until a cold boot
+> has been verified. The missing step is likely boot-selection persistence or
+> writing the active boot slot, and this is still being investigated.
 
 Read this page completely before running commands.
 
@@ -138,6 +140,15 @@ reset
 This reset is not enough to prove persistence. After OpenWrt boots, power the
 device off completely, wait a few seconds, power it back on, and verify that it
 still boots OpenWrt before removing serial wiring.
+
+If the only observed boot line is:
+
+```text
+## Booting kernel from FIT Image at 84000000 ...
+```
+
+do not treat that as proof that OpenWrt was loaded from flash. `0x84000000` is
+the RAM address used for TFTP loading in this guide.
 
 ## First Boot
 
